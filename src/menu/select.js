@@ -1,12 +1,8 @@
 import React from "react";
 import { ControlledTreeEnvironment, Tree } from "react-complex-tree";
-import selectData from "../select";
 import "react-complex-tree/lib/style.css";
 
 class Select extends React.Component {
-  onItemChange = (name, item) => {
-    this.setState({ [name]: item });
-  };
 
   render() {
     const { dataItems, focusedItem = [], expandedItems = [] } = this.props;
@@ -29,7 +25,7 @@ class Select extends React.Component {
           )
         }
       >
-        <Tree treeId="tree-2" rootItem="root" treeLabel="Tree Example" />
+        <Tree treeId="tree-2" rootItem="root" />
       </ControlledTreeEnvironment>
     );
   }
