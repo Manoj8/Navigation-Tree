@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 
 import { toast } from "react-toast";
-import { UncontrolledTreeEnvironment, StaticTreeDataProvider, Tree } from "react-complex-tree";
+import {
+  UncontrolledTreeEnvironment,
+  StaticTreeDataProvider,
+  Tree,
+} from "react-complex-tree";
 import Select from "./select";
 import dataItems from "../select";
 import "./menu.css";
@@ -43,47 +47,83 @@ export default class Menu extends Component {
     });
   };
 
-  deleteMenu = (menuIndex, subIndex) => {
-
-  };
-
   render() {
-    const { menuItems, focusedItem = [], expandedItems = [], newCategory, isNavOpen } = this.state;
-    const list = (<UncontrolledTreeEnvironment dataProvider={new StaticTreeDataProvider(menuItems, (item, data) => ({ ...item, data }))} getItemTitle={(item) => item.data} viewState={{}}>
-    <Tree treeId="tree-1" rootItem="root" treeLabel="Tree Example" />
-  </UncontrolledTreeEnvironment>);
+    const {
+      menuItems,
+      focusedItem = [],
+      expandedItems = [],
+      newCategory,
+      isNavOpen,
+    } = this.state;
+    const list = (
+      <UncontrolledTreeEnvironment
+        dataProvider={
+          new StaticTreeDataProvider(menuItems, (item, data) => ({
+            ...item,
+            data,
+          }))
+        }
+        getItemTitle={(item) => item.data}
+        viewState={{}}
+      >
+        <Tree treeId="tree-1" rootItem="root" treeLabel="Tree Example" />
+      </UncontrolledTreeEnvironment>
+    );
     return (
       <div className="menu-categories">
-        <span className="nav-icon" onClick={() => this.handleChange("isNavOpen", true)}>
+        <span
+          className="nav-icon"
+          onClick={() => this.handleChange("isNavOpen", true)}
+        >
           &#9776;
         </span>
 
-        <div className="nav-bar">
-          {list}
-        </div>
+        <div className="nav-bar">{list}</div>
 
-        {isNavOpen && <div className="side-nav">
-          <span className="close-btn" onClick={() => this.handleChange("isNavOpen", false)}>
-            X
-          </span>
-          {list}
-        </div>}
+        {isNavOpen && (
+          <div className="side-nav">
+            <span
+              className="close-btn"
+              onClick={() => this.handleChange("isNavOpen", false)}
+            >
+              X
+            </span>
+            {list}
+          </div>
+        )}
 
         <div className="category-form">
           <div className="form new-category">
             <p>Enter New Category</p>
-            <input type="text" className="input-field" name="newCategory" value={newCategory} onChange={(ev) => this.handleChange("newCategory", ev.target.value)} />
+            <input
+              type="text"
+              className="input-field"
+              name="newCategory"
+              value={newCategory}
+              onChange={(ev) =>
+                this.handleChange("newCategory", ev.target.value)
+              }
+            />
           </div>
 
           <div className="form category">
             <p>Select Category </p>
-            <Select dataItems={menuItems} handleChange={this.handleChange} focusedItem={focusedItem} expandedItems={expandedItems} addMenu={this.addMenu} />
+            <Select
+              dataItems={menuItems}
+              handleChange={this.handleChange}
+              focusedItem={focusedItem}
+              expandedItems={expandedItems}
+              addMenu={this.addMenu}
+            />
           </div>
 
-          <button className="form add-button" disabled={focusedItem.length === 0 || newCategory.length === 0} onClick={this.addMenu}>
+          <button
+            className="form add-button"
+            disabled={focusedItem.length === 0 || newCategory.length === 0}
+            onClick={this.addMenu}
+          >
             Add Category
           </button>
-
         </div>
       </div>
     );
